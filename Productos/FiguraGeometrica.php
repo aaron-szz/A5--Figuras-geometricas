@@ -13,12 +13,12 @@
 class FiguraGeometrica {
     // Atributos
     private $tipoFigura;
-    private $lado1;
+    private $base;
 
     // Constructor
-    public function __construct($tipoFigura, $lado1) {
+    public function __construct($tipoFigura, $base) {
         $this->tipoFigura = $tipoFigura;
-        $this->lado1 = $lado1;
+        $this->base = $base;
     }
 
     // Getters
@@ -26,8 +26,8 @@ class FiguraGeometrica {
         return $this->tipoFigura;
     }
 
-    public function getLado1() {
-        return $this->lado1;
+    public function getBase() {
+        return $this->base;
     }
 
     // Setters
