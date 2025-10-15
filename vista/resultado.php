@@ -1,109 +1,100 @@
 <?php
 session_start();
-$figura = $_SESSION['figura'] ?? '';
+require_once 'Triangulo.php';
+require_once 'Cuadrado.php';
+require_once 'Circulo.php';
+require_once 'Rectangulo.php';
+
+// Si vienen datos por POST, guárdalos en sesión
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $_SESSION['figura'] = $_POST['figura'] ?? '';
+    $_SESSION['datos'] = $_POST;
+}
+
+
+
+$rutaImagen = '';
+switch ($_SESSION['figura'] ?? '') {
+    case 'triangulo':
+        $rutaImagen = 'img/triangulo.webp';
+        break;
+    case 'cuadrado':
+        $rutaImagen = 'img/cuadrado.png';
+        break;
+    case 'circulo':
+        $rutaImagen = 'img/circulo.png';
+        break;
+    case 'rectangulo':
+        $rutaImagen = 'img/rectangulo.svg';
+        break;
+}
+// Crear objeto según figura
+switch ($_SESSION['figura'] ?? '') {
+    case "triangulo":
+        $base = $_SESSION['datos']['base'] ?? 0;
+        $altura = $_SESSION['datos']['altura'] ?? 0;
+        $obj = new Triangulo("Triangulo", $base, $altura);
+        break;
+    case "cuadrado":
+        $lado = $_SESSION['datos']['lado'] ?? 0;
+        $obj = new Cuadrado("Cuadrado", $lado);
+        break;
+    case "circulo":
+        $radio = $_SESSION['datos']['radio'] ?? 0;
+        $obj = new Circulo("Circulo", $radio);
+        break;
+    case "rectangulo":
+        $base = $_SESSION['datos']['base'] ?? 0;
+        $altura = $_SESSION['datos']['altura'] ?? 0;
+        $obj = new Rectangulo("Rectangulo", $base, $altura);
+        break;
+    default:
+        $obj = null;
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultado de <?= ucfirst($figura) ?></title>
+    <title>Resultado</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <style>
-        body {
-            background-color: #f0f2f5;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header {
-            background-color: #0d6efd;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-            font-size: 2.2rem;
-            font-weight: bold;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-
-        .resultado-container {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px 20px;
-        }
-
-        .resultado-box {
-            background-color: white;
-            border-radius: 12px;
-            padding: 40px;
-            max-width: 700px;
-            width: 100%;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-            text-align: center;
-            font-size: 1.4rem;
-        }
-
-        .btn-volver {
-            margin-top: 30px;
-            font-size: 1.2rem;
-        }
-
-        .btn-volver a {
-            text-decoration: none;
-            color: white;
-        }
-
-        .btn-volver a:hover {
-            color: #e2e2e2;
-        }
+        .btn-rojo { background-color: #fff8f8ff; color: black; border: none; }
+        .btn-rojo:hover { background-color: #615f5fff; }
+        .bg-rojo { background-color: #f8f4f4ff; color: black; }
     </style>
 </head>
-<body>
-
-<header>
-    Figura seleccionada: <?= ucfirst($figura) ?>
+<body class="bg-light">
+    
+<header class="bg-white text-dark py-3 mb-4 shadow d-flex align-items-center justify-content-center gap-3 border-bottom">
+    <?php if ($rutaImagen): ?>
+        <img src="<?= $rutaImagen ?>" alt="<?= $_SESSION['figura'] ?? '' ?>" style="width: 60px; height: 60px; object-fit: contain;">
+    <?php endif; ?>
+    <h1 class="mb-0" style="font-size: 2rem;">Figura seleccionada: <?= ucfirst($_SESSION['figura'] ?? '') ?></h1>
 </header>
+ 
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-rojo text-center">
+            <h3>Resultado</h3>
+        </div>
+        <div class="card-body">
+            <?php if ($obj): ?>
+                <?= $obj ?>
+            <?php else: ?>
+                <p class="text-danger">No se pudo calcular la figura.</p>
+            <?php endif; ?>
 
-<div class="resultado-container">
-    <div class="resultado-box">
-        <?php
-        require_once 'FiguraGeometrica.php';
-        require_once 'Triangulo.php';
-        require_once 'Cuadrado.php';
-        require_once 'Circulo.php';
+            <form action="formulario.php" method="post">
+                <button type="submit" class="btn btn-dark mt-3 w-100">Modificar datos</button>
+            </form>
 
-        switch ($figura) {
-            case "triangulo":
-                $base = $_POST['base'];
-                $altura = $_POST['altura'];
-                $triangulo = new Triangulo("Triángulo", $base, $altura);
-                echo $triangulo;
-                break;
-
-            case "cuadrado":
-                $lado = $_POST['lado'];
-                $cuadrado = new Cuadrado("Cuadrado", $lado);
-                echo $cuadrado;
-                break;
-
-            case "circulo":
-                $radio = $_POST['radio'];
-                $circulo = new Circulo("Círculo", $radio);
-                echo $circulo;
-                break;
-        }
-        ?>
-        <div class="btn-volver">
-            <a href="index.html" class="btn btn-primary">Volver</a>
+            <form action="cerrar.php" method="post">
+                <button type="submit" class="btn btn-dark mt-3 w-100">Volver al inicio</button>
+            </form>
         </div>
     </div>
 </div>
-
 </body>
 </html>
