@@ -1,9 +1,9 @@
 <?php
 session_start();
-require_once 'Triangulo.php';
-require_once 'Cuadrado.php';
-require_once 'Circulo.php';
-require_once 'Rectangulo.php';
+require_once '../Productos/Triangulo.php';
+require_once '../Productos/Cuadrado.php';
+require_once '../Productos/Circulo.php';
+require_once '../Productos/Rectangulo.php';
 
 // Si vienen datos por POST, guárdalos en sesión
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -16,16 +16,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 $rutaImagen = '';
 switch ($_SESSION['figura'] ?? '') {
     case 'triangulo':
-        $rutaImagen = 'img/triangulo.webp';
+        $rutaImagen = '../img/triangulo.webp';
         break;
     case 'cuadrado':
-        $rutaImagen = 'img/cuadrado.png';
+        $rutaImagen = '../img/cuadrado.png';
         break;
     case 'circulo':
-        $rutaImagen = 'img/circulo.png';
+        $rutaImagen = '../img/circulo.png';
         break;
     case 'rectangulo':
-        $rutaImagen = 'img/rectangulo.svg';
+        $rutaImagen = '../img/rectangulo.svg';
         break;
 }
 // Crear objeto según figura
@@ -90,7 +90,7 @@ switch ($_SESSION['figura'] ?? '') {
                 <button type="submit" class="btn btn-dark mt-3 w-100">Modificar datos</button>
             </form>
 
-            <form action="cerrar.php" method="post">
+            <form action="../procesos/cerrar.php" method="post">
                 <button type="submit" class="btn btn-dark mt-3 w-100">Volver al inicio</button>
             </form>
         </div>

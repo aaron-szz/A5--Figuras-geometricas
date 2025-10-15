@@ -16,7 +16,7 @@ class FiguraGeometrica {
     private $base;
 
     // Constructor
-    public function __construct($tipoFigura, $base) {
+    public function __construct($tipoFigura, $base = null) {
         $this->tipoFigura = $tipoFigura;
         $this->base = $base;
     }

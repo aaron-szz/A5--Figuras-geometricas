@@ -9,16 +9,16 @@ $datos = $_SESSION['datos'] ?? [];
 $rutaImagen = '';
 switch ($figura) {
     case 'triangulo':
-        $rutaImagen = 'img/triangulo.webp';
+        $rutaImagen = '../img/triangulo.webp';
         break;
     case 'cuadrado':
-        $rutaImagen = 'img/cuadrado.png';
+        $rutaImagen = '../img/cuadrado.png';
         break;
     case 'circulo':
-        $rutaImagen = 'img/circulo.png';
+        $rutaImagen = '../img/circulo.png';
         break;
     case 'rectangulo':
-        $rutaImagen = 'img/rectangulo.svg';
+        $rutaImagen = '../img/rectangulo.svg';
         break;
 }
 ?>
@@ -130,7 +130,7 @@ switch ($figura) {
     </form>
 </div>
 
-<script src="validacion.js"></script>
+<script src="../validaciones/validacion.js"></script>
 
 
 </body>

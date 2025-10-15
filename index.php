@@ -66,7 +66,7 @@
 
   <div class="card">
     <h2>Elige una figura</h2>
-    <form action="formulario.php" method="post">
+    <form action="./vista/formulario.php" method="post">
       <input type="hidden" name="figura" id="figuraSeleccionada">
       <div class="grid">
         <button type="submit" class="figura-btn" onclick="seleccionar('triangulo')">
